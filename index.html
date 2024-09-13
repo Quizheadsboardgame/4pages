@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Colorful Iframes with Minimization</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100vw;
+            background-color: #f4f4f4;
+        }
+
+        .iframe-container {
+            position: relative;
+            width: 90%;
+            height: 90%;
+            margin: 20px;
+            display: none;
+        }
+
+        .iframe-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .iframe-container.active {
+            display: block;
+        }
+
+        /* Colored squares when minimized */
+        .minimized-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            background-color: rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            gap: 10px;
+        }
+
+        .minimized {
+            width: 100px;
+            height: 100px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .green { background-color: green; }
+        .red { background-color: red; }
+        .orange { background-color: orange; }
+        .purple { background-color: purple; }
+
+        /* Close button (X) */
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border: none;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- Green iframe -->
+        <div class="iframe-container green-container active">
+            <button class="close-btn" onclick="minimize('green')">X</button>
+            <iframe src="https://quizheadsboardgame.github.io/testtest/"></iframe>
+        </div>
+
+        <!-- Red iframe -->
+        <div class="iframe-container red-container">
+            <button class="close-btn" onclick="minimize('red')">X</button>
+            <iframe src="https://quizheadsboardgame.github.io/testtest/"></iframe>
+        </div>
+
+        <!-- Orange iframe -->
+        <div class="iframe-container orange-container">
+            <button class="close-btn" onclick="minimize('orange')">X</button>
+            <iframe src="https://quizheadsboardgame.github.io/testtest/"></iframe>
+        </div>
+
+        <!-- Purple iframe -->
+        <div class="iframe-container purple-container">
+            <button class="close-btn" onclick="minimize('purple')">X</button>
+            <iframe src="https://quizheadsboardgame.github.io/testtest/"></iframe>
+        </div>
+
+    </div>
+
+    <!-- Always visible minimized squares at the bottom -->
+    <div class="minimized-container">
+        <div class="minimized green" onclick="maximize('green')">Green</div>
+        <div class="minimized red" onclick="maximize('red')">Red</div>
+        <div class="minimized orange" onclick="maximize('orange')">Orange</div>
+        <div class="minimized purple" onclick="maximize('purple')">Purple</div>
+    </div>
+
+    <script>
+        // Minimize function: Hides iframe and keeps minimized square visible at the bottom
+        function minimize(color) {
+            document.querySelector('.' + color + '-container').classList.remove('active');
+        }
+
+        // Maximize function: Shows iframe and hides other iframes
+        function maximize(color) {
+            // Hide all iframes
+            const containers = document.querySelectorAll('.iframe-container');
+            containers.forEach(container => container.classList.remove('active'));
+
+            // Show the selected iframe
+            document.querySelector('.' + color + '-container').classList.add('active');
+        }
+
+        // By default, the first iframe (green) is open
+        document.addEventListener('DOMContentLoaded', () => {
+            minimize('red');
+            minimize('orange');
+            minimize('purple');
+        });
+    </script>
+
+</body>
+</html>
